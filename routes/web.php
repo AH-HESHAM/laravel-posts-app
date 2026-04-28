@@ -28,5 +28,7 @@ Route::put('/posts/{post}', [PostController::class, "update"]);
 // delete 
 Route::delete('/posts/{post}', [PostController::class, "destroy"]);
 
+// restore all deleted posts
+Route::get('/posts/restore/all', [PostController::class, "restore"]);
 // // can replace all above by this
 // Route::resource("/posts", PostController::class);

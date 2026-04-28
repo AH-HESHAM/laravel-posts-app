@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Models\Post;
 
 class PostController extends Controller
 {
-    function getPosts() {
-        return json_decode(file_get_contents(database_path('posts.json')), true);
-    }
-
-    function savePosts($posts) {
-        file_put_contents(database_path('posts.json'), json_encode($posts, JSON_PRETTY_PRINT));
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = $this->getPosts();
+        $posts = Post::latest()->paginate(5);
         return view('posts.index', ['posts'=>$posts]);
     }
 
@@ -33,14 +27,13 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $posts = $this->getPosts();
-        $posts[] = [
-            'title' => $request->title,
-            'content' => $request->content
-        ];
-        $this->savePosts($posts);
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->owner = 1;
+        $post->save();
         return redirect('/posts');
     }
 
@@ -49,8 +42,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $posts = $this->getPosts();
-        return view('posts.show', ['posts'=>$posts, 'post'=>$id - 1]);
+        $post = post::find($id);
+        return view('posts.show', ['post'=>$post]);
     }
 
     /**
@@ -58,21 +51,19 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $posts = $this->getPosts();
-        return view('posts.edit', ['post' => $posts[$id - 1], 'id' => $id]);
+        $post = Post::find($id);
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, string $id)
     {
-        $posts = $this->getPosts();
-        $posts[$id - 1] = [
-            'title' => $request->title,
-            'content' => $request->content
-        ];
-        $this->savePosts($posts);
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->save();
         return redirect('/posts');
     }
 
@@ -81,9 +72,13 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $posts = $this->getPosts();
-        array_splice($posts, $id - 1, 1);
-        $this->savePosts($posts);
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/posts');
+    }
+
+    public function restore() {
+        Post::onlyTrashed()->restore();
         return redirect('/posts');
     }
 }

@@ -20,14 +20,14 @@
             <span class="mr-2 transform group-hover:-translate-x-1 transition">←</span> Back to all posts
         </a>
 
-        @if(isset($posts[$post]))
+        @if(isset($post))
             <article class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mt-4 p-8 md:p-12">
-                <h1 class="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">{{ $posts[$post]['title'] }}</h1>
-                <p class="text-lg text-slate-600 leading-relaxed whitespace-pre-line mb-10">{{ $posts[$post]['content'] }}</p>
+                <h1 class="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">{{ $post['title'] }}</h1>
+                <p class="text-lg text-slate-600 leading-relaxed whitespace-pre-line mb-10">{{ $post['content'] }}</p>
                 
                 <div class="pt-8 border-t border-slate-100 flex space-x-4">
-                    <a href="/posts/{{ $post + 1 }}/edit" class="bg-blue-50 text-blue-600 px-5 py-2.5 rounded-lg font-bold hover:bg-blue-100 transition">Edit Post</a>
-                    <form action="/posts/{{ $post + 1 }}" method="POST">
+                    <a href="/posts/{{ $post->id}}/edit" class="bg-blue-50 text-blue-600 px-5 py-2.5 rounded-lg font-bold hover:bg-blue-100 transition">Edit Post</a>
+                    <form action="/posts/{{ $post->id}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" onclick="return confirm('Delete?')" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-lg font-bold hover:bg-red-100 transition">Delete Post</button>

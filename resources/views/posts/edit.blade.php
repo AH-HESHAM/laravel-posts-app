@@ -18,7 +18,7 @@
     <div class="container mx-auto px-4 max-w-2xl">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
             <div class="bg-blue-600 px-8 py-6 text-white font-bold text-2xl">Edit Post</div>
-            <form action="/posts/{{ $id }}" method="POST" class="p-8 space-y-6">
+            <form action="/posts/{{ $post->id }}" method="POST" class="p-8 space-y-6">
                 @csrf
                 @method('PUT')
                 <div>
@@ -34,6 +34,11 @@
                     <a href="/posts" class="px-6 py-3 text-slate-500 font-semibold hover:text-slate-700 transition">Cancel</a>
                 </div>
             </form>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </body>

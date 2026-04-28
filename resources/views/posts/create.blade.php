@@ -22,17 +22,27 @@
                 @csrf
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Title</label>
-                    <input type="text" name="title" required placeholder="Post title" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    <input value="{{old('title')}}" type="text" name="title" required placeholder="Post title" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Content</label>
-                    <textarea name="content" rows="6" required placeholder="Post content..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition"></textarea>
+                    <input value="{{old('content')}}" name="content" rows="6" required placeholder="Post content..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Owner</label>
+                    
+
                 </div>
                 <div class="flex items-center space-x-4 pt-4">
                     <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">Save Post</button>
                     <a href="/posts" class="px-6 py-3 text-slate-500 font-semibold hover:text-slate-700 transition">Cancel</a>
                 </div>
             </form>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>   
         </div>
     </div>
 </body>
