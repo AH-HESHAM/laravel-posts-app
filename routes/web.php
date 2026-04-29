@@ -1,34 +1,22 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// show all posts
-Route::get('/posts', [PostController::class, "index"]);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// go to create post form
-Route::get('/posts/create', [PostController::class, "create"]);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// save new post entered in form
-Route::post('/posts', [PostController::class, "store"]);
-
-// show one post
-Route::get('/posts/{post}', [PostController::class, "show"]);
-
-// go to edit form
-Route::get('/posts/{post}/edit', [PostController::class, "edit"]);
-
-// save edit
-Route::put('/posts/{post}', [PostController::class, "update"]);
-
-// delete 
-Route::delete('/posts/{post}', [PostController::class, "destroy"]);
-
-// restore all deleted posts
-Route::get('/posts/restore/all', [PostController::class, "restore"]);
-// // can replace all above by this
-// Route::resource("/posts", PostController::class);
+require __DIR__.'/auth.php';
+Route::resource("/posts", PostController::class);
