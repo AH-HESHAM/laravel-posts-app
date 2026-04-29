@@ -81,7 +81,6 @@ class PostController extends Controller
             $request->image->move(public_path('posts_images'), $imageName);
             $post->image = 'posts_images/' . $imageName;
         }
-
         $post->save();
         return redirect('/posts');
     }
