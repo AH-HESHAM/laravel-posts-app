@@ -36,8 +36,8 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('images'), $imageName);
-            $post->image = 'images/' . $imageName;
+            $request->image->move(public_path('posts_images'), $imageName);
+            $post->image = 'posts_images/' . $imageName;
         }
 
         $post->save();
@@ -78,8 +78,8 @@ class PostController extends Controller
             }
 
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('images'), $imageName);
-            $post->image = 'images/' . $imageName;
+            $request->image->move(public_path('posts_images'), $imageName);
+            $post->image = 'posts_images/' . $imageName;
         }
 
         $post->save();
