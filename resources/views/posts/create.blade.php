@@ -18,7 +18,7 @@
     <div class="container mx-auto px-4 max-w-2xl">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
             <div class="bg-indigo-600 px-8 py-6 text-white font-bold text-2xl">Create New Post</div>
-            <form action="/posts" method="POST" class="p-8 space-y-6">
+            <form action="/posts" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
                 @csrf
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Title</label>
@@ -27,6 +27,10 @@
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Content</label>
                     <input value="{{old('content')}}" name="content" rows="6" required placeholder="Post content..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Image (Optional)</label>
+                    <input type="file" name="image" accept="image/*" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none bg-white transition">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Owner</label>

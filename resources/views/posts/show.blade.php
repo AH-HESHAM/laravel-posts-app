@@ -22,6 +22,9 @@
 
         @if(isset($post))
             <article class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mt-4 p-8 md:p-12">
+                @if($post->image)
+                    <img src="{{ asset($post->image) }}" alt="Post Image" class="w-full max-h-96 object-cover rounded-xl mb-8">
+                @endif
                 <h1 class="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">{{ $post['title'] }}</h1>
                 <p class="text-lg text-slate-600 leading-relaxed whitespace-pre-line mb-10">{{ $post['content'] }}</p>
                 

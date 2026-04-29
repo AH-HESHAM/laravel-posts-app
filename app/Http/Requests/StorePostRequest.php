@@ -32,6 +32,7 @@ class StorePostRequest extends FormRequest
                 Rule::unique('posts', 'title')->ignore($postId),
             ],
             "content" => "required|min:10",
+            "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ];
     }
 

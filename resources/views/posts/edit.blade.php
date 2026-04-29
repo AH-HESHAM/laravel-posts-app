@@ -18,7 +18,7 @@
     <div class="container mx-auto px-4 max-w-2xl">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
             <div class="bg-blue-600 px-8 py-6 text-white font-bold text-2xl">Edit Post</div>
-            <form action="/posts/{{ $post->id }}" method="POST" class="p-8 space-y-6">
+            <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
                 @csrf
                 @method('PUT')
                 <div>
@@ -28,6 +28,15 @@
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Content</label>
                     <textarea name="content" rows="6" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition">{{ $post['content'] }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Image (Optional)</label>
+                    @if($post->image)
+                        <div class="mb-3">
+                            <img src="{{ asset($post->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg">
+                        </div>
+                    @endif
+                    <input type="file" name="image" accept="image/*" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none bg-white transition">
                 </div>
                 <div class="flex items-center space-x-4 pt-4">
                     <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100">Update Post</button>

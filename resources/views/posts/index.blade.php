@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Posts</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Inter', sans-serif; }</style>
@@ -26,11 +26,18 @@
             <div class="grid gap-6">
                 @foreach($posts as  $post)
                     <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition group">
+                        @if($post->image)
+                            <img src="{{ asset($post->image) }}" alt="Post Image" class="w-full h-48 object-cover rounded-xl mb-4">
+                        @endif
                         <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition">{{ $post['title'] }}</h2>
                         <p class="text-slate-600 leading-relaxed mb-4">{{ $post['content'] }}</p>
                         <p class="text-sm text-slate-400 mb-2">
                             Created At :
                             {{ $post->created_at->format('l jS \of F Y h:i:s A') }}
+                        </p>
+                        <p class="text-sm text-slate-400 mb-2">
+                            Created By :
+                            {{ $post->post_owner->name}}
                         </p>
                         
                         <div class="flex items-center space-x-4 border-t border-slate-100 pt-4 mt-2">
@@ -54,4 +61,4 @@
         </div>
     </div>
 </body>
-</html>
+</x-app-layout>

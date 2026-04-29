@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->text("content");
+            $table->string("image")->nullable();
             $table->unsignedBigInteger("owner");
             $table->foreign("owner")->references("id")->on("users");
             $table->timestamps();

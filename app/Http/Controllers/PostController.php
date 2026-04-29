@@ -33,6 +33,13 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->owner = 1;
+
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('images'), $imageName);
+            $post->image = 'images/' . $imageName;
+        }
+
         $post->save();
         return redirect('/posts');
     }
@@ -63,6 +70,18 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->title = $request->title;
         $post->content = $request->content;
+
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($post->image && file_exists(public_path($post->image))) {
+                unlink(public_path($post->image));
+            }
+
+            $imageName = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('images'), $imageName);
+            $post->image = 'images/' . $imageName;
+        }
+
         $post->save();
         return redirect('/posts');
     }
